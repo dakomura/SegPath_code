@@ -54,7 +54,7 @@ This script runs Cellpose to the extrated patches (for cell segmentation).
 
 usage:
 ```
-python 2_CELL.run_cellpose.py indir [option] 
+python 2_CELL.run_cellpose.py input_dir [option] 
 ```
 
 Input Variable | Description
@@ -71,17 +71,51 @@ Input Variable | Description
 ### `3_CELL.mask_generation.py` 
 This script generates the segmentation masks based on the patches from IF-restained sections and the Cellpose output. 
 
+usage:
+```
+python 3_CELL.mask_generation.py input_dir 
+```
+
 ### `3_RBC.mask_generation.py` 
 This script generates the segmentation masks for red blood cells based on the patches from IF-restained sections. 
+
+usage:
+```
+python 3_RBC.mask_generation.py input_WSI 
+```
+Input Variable | Description
+--- | --- 
+--msize_opal | minimum size of IF positive region
+--th_opal | IF intensity cutoff
+
 
 ### `3_REGION.mask_generation.py ` 
 This script generates the segmentation masks for tissues based on the patches from IF-restained sections. 
 
+usage:
+```
+python 3_REGION.mask_generation.py input_dir 
+```
+Input Variable | Description
+--- | --- 
+--th_opal | IF intensity cutoff
+
 ### `4.QC_make_summary.py` 
 This script calculates blur level and the correlation between DAPI and Hematoxylin signal.
 
+usage:
+```
+python 4.QC_make_summary.py input_dir 
+```
+
 ### `5.filter_QC.py` 
 This script filters out patches based blur level and the correlation between DAPI and Hematoxylin signal.
+
+usage:
+```
+python 5.filter_QC.py input_dir antibody 
+```
+
 
 ### `6.train_segmentation_model.py` 
 This script trains the segmentation models (requires MLFlow).
