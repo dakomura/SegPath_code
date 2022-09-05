@@ -52,6 +52,22 @@ Input Variable | Description
 ### `2_CELL.run_cellpose.py` 
 This script runs Cellpose to the extrated patches (for cell segmentation).
 
+usage:
+```
+python 2_CELL.run_cellpose.py indir [option] 
+```
+
+Input Variable | Description
+--- | --- 
+--pos_th | IF intensity cutoff for mask generation(0-255)
+--diameter | expected nucleus diameter(px)
+--bs | batch size for cellpose
+--overlap | overlap rate for positive cell
+--cpu | CPU mode
+--reuse | reuse cellpose results
+--skip | skip if the output file exists
+--cellpose_th | Cell probability threshold
+
 ### `3_CELL.mask_generation.py` 
 This script generates the segmentation masks based on the patches from IF-restained sections and the Cellpose output. 
 
