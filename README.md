@@ -56,6 +56,8 @@ Input Variable | Description
 
 The slides must be scanned at 40x magnification.
 
+The last directory name of targetdir is used in other scripts as `antibody`.
+
 output:
 - HE-stained patch file, which ends with `_HE.png`
 - IF-stained patch file, which ends with `_IHC_nonrigid.png`
