@@ -36,6 +36,19 @@ Python 3.7 or newer
 ### `1.registration_patch_extraction.py` 
 This script extracts patches from Whole Slide Images (.ndpi) of tissue microarray sections after rigid and non-rigid registration between H&E-stained and immunofluorescence (IF)-restained sections.
 
+usage:
+```
+python 1.registration_patch_extraction.py targetdir outdir [option] 
+```
+
+Input Variable | Description
+--- | --- 
+--init-scale | scale used for rough registration
+--regist_scale | scale for fine-grained registration
+--img_size | output image size
+--mask_th | cutoff IHC intensity for mask generation (0-255)
+--overwrite | overwrite output image files
+
 ### `2_CELL.run_cellpose.py` 
 This script runs Cellpose to the extrated patches (for cell segmentation).
 
