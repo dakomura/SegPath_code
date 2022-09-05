@@ -74,8 +74,9 @@ lowQ = []
 cs = []
 bs = []
 
-ab="MIST1_HR"
-indir=join("/dataset/",ab)
+indir=sys.argv[1]
+ab=sys.argv[2] #"MIST1_HR"
+#indir=join("/dataset/",ab)
 infiles = glob.glob(join(indir,"*/*_HE.png"))
 print(f"antibody {ab} : {len(infiles)} imgfiles")
 
