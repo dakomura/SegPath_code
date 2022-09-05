@@ -56,6 +56,12 @@ Input Variable | Description
 
 The slides should be scanned at 40x magnification.
 
+output:
+- patch image file, which ends with `_HE.png`
+- patch image file, which ends with `_IHC_nonrigid.png`
+
+The HE and IF-image pair files have the same prefix in its name.
+
 ### `2_CELL.run_cellpose.py` 
 This script runs Cellpose to the extrated patches (for cell segmentation).
 
