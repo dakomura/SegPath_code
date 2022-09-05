@@ -116,6 +116,27 @@ usage:
 python 5.filter_QC.py input_dir antibody 
 ```
 
-
 ### `6.train_segmentation_model.py` 
 This script trains the segmentation models (requires MLFlow).
+usage:
+```
+python 6.train_segmentation_model.py antibody 
+```
+Input Variable | Description
+--- | --- 
+--user | user name for MLFlow
+--data_dir | input data directory
+--resume | resume file for Optuna Study
+--img_size | input image size
+--post | postfix for MLflow name
+--loss | loss type(combo/dice/bce/ftv/focal/auto)
+--lparam1 | loss parameter 1
+--lparam2 | loss parameter 2
+--nepoch | number of epochs
+--n_trials | number of optuna trials
+--nbatch_tr | training batch size
+--accum_grad | use accumulate gradient
+--oversampling | oversampling for training data
+--num_gpus | number of GPU used for training
+--debug | debug mode (only 5% samples are used for train/val
+
