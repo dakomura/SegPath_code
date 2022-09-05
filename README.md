@@ -49,18 +49,18 @@ Input Variable | Description
 --mask_th | cutoff IHC intensity for mask generation (0-255)
 --overwrite | overwrite output image files
 
-`targetdir` should contain subdirectories, each of which have the following three .ndpi files.
+`targetdir` must contain subdirectories, each of which have the following three .ndpi files.
 1. HE-stained WSI file the file must contain either 'DAPI' or 'Opal' in its name.
 1. DAPI-stained WSI file (the file must contain 'DAPI' in its name.)
 1. IF-stained WSI file (the file must contain 'Opal' in its name.)
 
-The slides should be scanned at 40x magnification.
+The slides must be scanned at 40x magnification.
 
 output:
-- patch image file, which ends with `_HE.png`
-- patch image file, which ends with `_IHC_nonrigid.png`
+- HE-stained patch file, which ends with `_HE.png`
+- IF-stained patch file, which ends with `_IHC_nonrigid.png`
 
-The HE and IF-image pair files have the same prefix in its name.
+The HE and IF-image pair files have the same prefix in their name.
 
 ### `2_CELL.run_cellpose.py` 
 This script runs Cellpose to the extrated patches (for cell segmentation).
@@ -81,6 +81,12 @@ Input Variable | Description
 --skip | skip if the output file exists
 --cellpose_th | Cell probability threshold
 
+`input_dir` is the output directory created by `1.registration_patch_extraction.py` 
+
+output:
+- image of IF-stained regions detected by Cellpose, which ends with `_IHC_cellpose_nonrigid.png`
+- cell mask, which ends with `_mask.pkl`
+
 ### `3_CELL.mask_generation.py` 
 This script generates the segmentation masks based on the patches from IF-restained sections and the Cellpose output. 
 
@@ -89,21 +95,31 @@ usage:
 python 3_CELL.mask_generation.py input_dir 
 ```
 
+`input_dir` is the output directory containig files created by `2_CELL.run_cellpose.pyy` 
+
+output:
+- mask of IF-stained regions detected by Cellpose, which ends with `_IHC_cellpose_mask.png`
+
+
 ### `3_RBC.mask_generation.py` 
 This script generates the segmentation masks for red blood cells based on the patches from IF-restained sections. 
 
 usage:
 ```
-python 3_RBC.mask_generation.py input_WSI [option] 
+python 3_RBC.mask_generation.py input_file [option] 
 ```
 Input Variable | Description
 --- | --- 
 --msize_opal | minimum size of IF positive region
 --th_opal | IF intensity cutoff
 
+`input_file` is the output HE-stained patch file created by `1.registration_patch_extraction.py`
 
-### `3_REGION.mask_generation.py ` 
-This script generates the segmentation masks for tissues based on the patches from IF-restained sections. 
+output:
+- RBC mask file, which ends with `_IHC_nonrigid_mask2.png`
+
+### `3_REGION.mask_generation.py `  
+This script generates the segmentation masks for tissues based on the patches from IF-restained sections (requires MLFlow). 
 
 usage:
 ```
@@ -113,6 +129,13 @@ Input Variable | Description
 --- | --- 
 --th_opal | IF intensity cutoff
 
+Note: Please modify the source code so that the RBC segmentation model can be loaded from MLFlow server (l.22-25, l.100).
+
+`input_dir` is the output directory created by `1.registration_patch_extraction.py` 
+
+output:
+- mask file, which ends with `_IHC_nonrigid_mask2.png`
+
 ### `4.QC_make_summary.py` 
 This script calculates blur level and the correlation between DAPI and Hematoxylin signal.
 
@@ -121,6 +144,11 @@ usage:
 python 4.QC_make_summary.py input_dir 
 ```
 
+`input_dir` is the output directory created by `1.registration_patch_extraction.py` 
+
+output:
+- csv file which contains blur level and the correlation between DAPI and Hematoxylin signal for each patch file.
+
 ### `5.filter_QC.py` 
 This script filters out patches based blur level and the correlation between DAPI and Hematoxylin signal.
 
@@ -128,6 +156,12 @@ usage:
 ```
 python 5.filter_QC.py input_dir antibody 
 ```
+
+`input_dir` is the output directory created by `1.registration_patch_extraction.py` 
+`antibody` is used in the output csv.
+
+output:
+- csv file which contains blur level and the correlation between DAPI and Hematoxylin signal for each patch file.
 
 ### `6.train_segmentation_model.py` 
 This script trains the segmentation models (requires MLFlow).
@@ -153,3 +187,7 @@ Input Variable | Description
 --num_gpus | number of GPU used for training
 --debug | debug mode (only 5% samples are used for train/val
 
+Note: Please modify the source code so that the RBC segmentation model can be loaded from MLFlow server (l.192-195).
+
+output:
+- Segmentation model (stored in MLFlow).
