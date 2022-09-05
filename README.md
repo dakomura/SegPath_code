@@ -49,6 +49,13 @@ Input Variable | Description
 --mask_th | cutoff IHC intensity for mask generation (0-255)
 --overwrite | overwrite output image files
 
+`targetdir` should contain subdirectories, each of which have the following three .ndpi files.
+1. HE-stained WSI file the file must contain either 'DAPI' or 'Opal' in its name.
+1. DAPI-stained WSI file (the file must contain 'DAPI' in its name.)
+1. IF-stained WSI file (the file must contain 'Opal' in its name.)
+
+The slides should be scanned at 40x magnification.
+
 ### `2_CELL.run_cellpose.py` 
 This script runs Cellpose to the extrated patches (for cell segmentation).
 
