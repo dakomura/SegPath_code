@@ -81,7 +81,7 @@ This script generates the segmentation masks for red blood cells based on the pa
 
 usage:
 ```
-python 3_RBC.mask_generation.py input_WSI 
+python 3_RBC.mask_generation.py input_WSI [option] 
 ```
 Input Variable | Description
 --- | --- 
@@ -94,7 +94,7 @@ This script generates the segmentation masks for tissues based on the patches fr
 
 usage:
 ```
-python 3_REGION.mask_generation.py input_dir 
+python 3_REGION.mask_generation.py input_dir [option] 
 ```
 Input Variable | Description
 --- | --- 
@@ -120,7 +120,7 @@ python 5.filter_QC.py input_dir antibody
 This script trains the segmentation models (requires MLFlow).
 usage:
 ```
-python 6.train_segmentation_model.py antibody 
+python 6.train_segmentation_model.py antibody [option]
 ```
 Input Variable | Description
 --- | --- 
