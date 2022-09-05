@@ -16,6 +16,7 @@ Python 3.7 or newer
 - pillow
 - tqdm
 - cellpose
+- mlflow
 - opencv
 - pytorch
 - torchvision
