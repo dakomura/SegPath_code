@@ -103,7 +103,7 @@ fname_post = "_IHC_cellpose_nonrigid"
 
 #####################
 
-def overlap_mask(img, mask):
+def overlap_mask(img, mask, pos_th, overlap_th):
     mask_final = np.zeros(mask.shape, dtype=int)
     mask_final_each = np.zeros(mask.shape, dtype=int)
 
