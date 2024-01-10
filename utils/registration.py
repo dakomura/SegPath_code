@@ -6,20 +6,7 @@ from utils import region
 from PIL import Image
 from skimage.color import rgb2hed
 import SimpleITK as sitk
-
-
-def extract_H(img_he, split=False):
-    if split:  # rgb2hed for large image
-        he_hed = rgb2hed_split(img_he)[:, :, 0]
-    else:
-        he_rgb = np.array(img_he)[:, :, :3]
-        he_hed = rgb2hed(he_rgb)[:, :, 0]
-    region_he = he_hed - np.min(he_hed)
-    region_he = region_he * 255 / np.max(region_he)
-    region_he = 255 - np.asarray(region_he, dtype='uint8')
-
-    return region_he
-
+import stain
 
 def zeropad(img, H, W):
     # zero padding when the image sizes are different in the first step
@@ -105,14 +92,14 @@ class Registration:
                                                           shift=shift)
 
                 if np.mean(region_he) > 5:
-                    result = self.first_registration(region_ihc, region_he, None, only_return=True)
+                    result = self.rigid_registration(region_ihc, region_he, None, only_return=True)
                     self.set_all(result['tvec'], ii, jj, xx, yy, region_he)
 
         self.find_peak(scale)
 
     def nonrigid_registration(self, region_HE, region_dapi, region_target):
 
-        he_h = extract_H(Image.fromarray(region_HE)).astype(np.float32)
+        he_h = stain.extract_H(Image.fromarray(region_HE)).astype(np.float32)
         ihc_dapi = region_dapi.astype(np.float32)
         ihc_target = region_target.astype(np.float32)
 
